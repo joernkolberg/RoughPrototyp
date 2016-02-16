@@ -6,13 +6,12 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
-
-import de.jko.rough.service.data.Registration;
 
 public class TestRegistration
 {
@@ -23,16 +22,21 @@ public class TestRegistration
 		Client client = ClientBuilder.newClient(config);
 		WebTarget service = client.target(getBaseURI());
 		
-		Registration registration = new de.jko.rough.service.data.Registration("Jupp", "Zupp", "jupp.zupp@yahoo.de", "secret");
-		Entity<Registration> entity = Entity.entity(registration, MediaType.APPLICATION_JSON);
+		Form form = new Form ();
+		form.param("firstname", "Jupp");
+		form.param("lastname", "Zupp");
+		form.param("email", "jupp.zupp@yahoo.de");
+		form.param("password", "secret");
 		
-		Response response = service.path("resources").path("register").request(MediaType.APPLICATION_JSON).post(entity, Response.class);
+		Entity<Form> entity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED);
+		Response response = service.path("register").request(MediaType.APPLICATION_JSON_TYPE).post(entity, Response.class);
+
 		System.out.println(response.getStatus());
 	}
 
 	private static URI getBaseURI()
 	{
-		return UriBuilder.fromUri("http://localhost:8080/RoughServices").build();
+		return UriBuilder.fromUri("http://localhost:8080/RoughServices/rest").build();
 	}
 
 }

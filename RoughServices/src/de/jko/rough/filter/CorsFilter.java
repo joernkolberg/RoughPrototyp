@@ -1,6 +1,7 @@
 package de.jko.rough.filter;
 
 import java.io.IOException;
+import java.net.URL;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,19 +12,24 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.xml.DOMConfigurator;
+
+import com.sun.istack.internal.logging.Logger;
+
 /**
  * Servlet Filter implementation class CorsFilter
  */
 @WebFilter("/*")
 public class CorsFilter implements Filter
 {
-
+	private Logger logger = Logger.getLogger(CorsFilter.class);
+	
 	/**
 	 * Default constructor.
 	 */
 	public CorsFilter()
 	{
-		// TODO Auto-generated constructor stub
+		logger.info("CorsFilter created");
 	}
 
 	/**
@@ -31,7 +37,7 @@ public class CorsFilter implements Filter
 	 */
 	public void destroy()
 	{
-		// TODO Auto-generated method stub
+		logger.info("CorsFilter destroyed");
 	}
 
 	/**
@@ -39,8 +45,10 @@ public class CorsFilter implements Filter
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
 	{
+		logger.info("doFilter START");
 		((HttpServletResponse) response).addHeader("Access-Control-Allow-Origin", "*");
 		chain.doFilter(request, response);
+		logger.info("doFilter END");
 	}
 
 	/**
@@ -48,7 +56,6 @@ public class CorsFilter implements Filter
 	 */
 	public void init(FilterConfig fConfig) throws ServletException
 	{
-		// TODO Auto-generated method stub
+		logger.info("CorsFilter.init");
 	}
-
 }

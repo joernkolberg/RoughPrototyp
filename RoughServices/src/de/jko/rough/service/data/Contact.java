@@ -14,6 +14,10 @@ public class Contact implements Serializable
 	private String lastName;
 	private String email;
 	
+	public Contact()
+	{
+	}
+	
 	public Contact(int contactId, String firstName, String lastName, String email)
 	{
 		super();

@@ -25,12 +25,12 @@ public class TestContact
 		Contact contact = new Contact(1111, "Jupp", "Zupp", "jupp.zupp@yahoo.de");
 		Entity<Contact> entity = Entity.entity(contact, MediaType.APPLICATION_JSON);
 		
-		Response response = service.path("resources").path("contact").request(MediaType.APPLICATION_JSON).post(entity, Response.class);
+		Response response = service.path("contact").request(MediaType.APPLICATION_JSON).post(entity, Response.class);
 		System.out.println(response.getStatus());
 	}
 
 	private static URI getBaseURI()
 	{
-		return UriBuilder.fromUri("http://localhost:8080/RoughServices").build();
+		return UriBuilder.fromUri("http://localhost:8080/RoughServices/rest").build();
 	}
 }
