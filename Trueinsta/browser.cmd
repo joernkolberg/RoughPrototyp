@@ -1,0 +1,1 @@
+phonegap emulate browser

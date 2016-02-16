@@ -1,0 +1,30 @@
+/* ################################### */
+ html { 
+        background: url(../img/insta-480x320.jpg) no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+
+#register 
+{ 
+	text-align: left;
+	position: absolute;   
+    height: auto; 
+	width: auto;    
+    left: 50px; 
+	top: 200px; 
+	font-size: 16pt;
+}  
+
+#headline 
+{ 
+	position: absolute;   
+    height: auto; 
+	width: auto;    
+    left: 100px; 
+	top: 300px; 
+	font-size: 72pt;
+}    
+

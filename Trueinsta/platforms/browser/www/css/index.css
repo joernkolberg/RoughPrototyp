@@ -1,0 +1,61 @@
+
+#register 
+{ 
+	text-align: left;
+	position: absolute;   
+    height: auto; 
+	width: auto;    
+    left: 50px; 
+	top: 200px; 
+	font-size: 16pt;
+}  
+
+#headline 
+{ 
+	position: absolute;   
+    height: auto; 
+	width: auto;    
+    left: 10px; 
+	top: 10px; 
+	font-size: 16pt;
+}    
+
+.ui-page {
+	background:url(../img/coast.jpg);
+	background-size: 130%;
+} 
+
+.title {
+	position: relative;
+	font-size: 72px;
+	margin-top: 0;
+	font-family: 'Myriad Pro', 'Myriad', helvetica, arial, sans-serif;
+	text-shadow: 2px 3px 3px #292929;
+	-webkit-text-stroke: 1px white;
+	text-align: center;
+}
+
+.hyperlinks {
+	position: relative;
+	font-size: 48px;
+	margin-top: 0;
+	font-family: 'Myriad Pro', 'Myriad', helvetica, arial, sans-serif;
+	text-shadow: 2px 3px 3px #292929;
+	-webkit-text-stroke: 1px white;
+	text-align: center;
+}
+
+a:link {
+	text-decoration: none;
+	font-family: 'Myriad Pro', 'Myriad', helvetica, arial, sans-serif;
+	text-shadow: 2px 3px 3px #292929;
+	-webkit-text-stroke: 1px white;
+}
+
+a:visited {
+	text-decoration: none;
+	font-family: 'Myriad Pro', 'Myriad', helvetica, arial, sans-serif;
+	text-shadow: 2px 3px 3px #292929;
+	-webkit-text-stroke: 1px white;
+}
+

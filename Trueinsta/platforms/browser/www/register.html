@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>True Insta - Registration</title>
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+<link rel="stylesheet" type="text/css" href="css/index.css"/>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $("#submit").click(registerUser);
+  });
+  function registerUser(){
+    console.log("Entering registerUser()");
+    $.post
+	(
+		"http://localhost:8080/RoughServices/rest/register",
+		$("#registerForm :input").serializeArray(), 
+		function(json){
+		  if(json== null || json == 'undefined')
+			alert("Registration failed");
+		  else
+			$('#meldung').html('Ihr Registrierung war erfolgreich. <a href="login.html">Weiter zu Anmeldung</a>');
+		}
+	);
+    return false;
+  }
+</script>
+</head>
+<body class="ui-page">
+<div id="headline" class="title"></div>
+<div id="register" class="hyperlinks">
+  <h3>Register</h3>
+  <form id="registerForm">
+    <table>
+      <tr>
+        <td>First name</td>
+        <td><input type="text" name="firstname" /></td>
+      </tr>
+      <tr>
+        <td>Last Name</td>
+        <td><input type="text" name="lastname" /></td>
+      </tr>
+	  <tr>
+        <td>Email</td>
+        <td><input type="text" name="email" /></td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td><input type="password" name="password" /></td>
+      </tr>
+      
+      <tr>
+        <td><input type="submit" id="submit" name="submit" value="Submit" /></td>
+      </tr>
+    </table>
+  </form>
+  <div id="meldung"/>
+</div>
+
+</body>
+</html>
