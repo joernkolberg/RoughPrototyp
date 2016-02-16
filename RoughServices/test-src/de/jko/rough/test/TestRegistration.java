@@ -12,12 +12,22 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
+import org.junit.Test;
 
-public class TestRegistration
+import de.jko.rough.service.data.Registration;
+
+public class TestRegistration extends AbstractTest
 {
-
-	public static void main(String[] args)
+	public TestRegistration()
 	{
+		super();
+	}
+
+	@Test
+	public void testForm()
+	{
+		logger.info("testForm - START");
+		
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
 		WebTarget service = client.target(getBaseURI());
@@ -29,9 +39,46 @@ public class TestRegistration
 		form.param("password", "secret");
 		
 		Entity<Form> entity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED);
+		Response response = service.path("register").request(MediaType.APPLICATION_JSON).post(entity, Response.class);
+
+		logger.info("testForm - response: " + response.getStatus());
+		logger.info("testForm - END");
+	}
+	
+	@Test
+	public void testJson()
+	{
+		logger.info("testJson - START");
+		
+		ClientConfig config = new ClientConfig();
+		Client client = ClientBuilder.newClient(config);
+		WebTarget service = client.target(getBaseURI());
+		
+		Registration registration = new Registration("Jupp", "Zupp", "jupp.zupp@yahoo.de", "secret");
+		
+		Entity<Registration> entity = Entity.entity(registration, MediaType.APPLICATION_JSON_TYPE);
 		Response response = service.path("register").request(MediaType.APPLICATION_JSON_TYPE).post(entity, Response.class);
 
-		System.out.println(response.getStatus());
+		logger.info("testJson - response: " + response.getStatus());
+		logger.info("testJson - END");
+	}
+	
+	@Test
+	public void testXML()
+	{
+		logger.info("testXML - START");
+		
+		ClientConfig config = new ClientConfig();
+		Client client = ClientBuilder.newClient(config);
+		WebTarget service = client.target(getBaseURI());
+		
+		Registration registration = new Registration("Jupp", "Zupp", "jupp.zupp@yahoo.de", "secret");
+		
+		Entity<Registration> entity = Entity.entity(registration, MediaType.APPLICATION_XML_TYPE);
+		Response response = service.path("register").request(MediaType.APPLICATION_XML_TYPE).post(entity, Response.class);
+
+		logger.info("testXML - response: " + response.getStatus());
+		logger.info("testXML - END");
 	}
 
 	private static URI getBaseURI()

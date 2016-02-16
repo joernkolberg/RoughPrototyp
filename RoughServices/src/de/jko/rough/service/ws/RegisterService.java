@@ -25,13 +25,31 @@ public class RegisterService extends AbstractService
 	}
 	
 	@POST
-	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response register(@FormParam("firstname") String firstname, @FormParam("lastname") String lastname,
 			@FormParam("email") String email, @FormParam("password") String password)
 	{
 		Registration registration = new Registration(firstname, lastname, email, password);
 		logger.info("register: " + registration.toString());
+		return Response.ok().entity(registration).build();
+	}
+	
+	@POST
+	@Consumes({ MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response registerJson(Registration registration)
+	{
+		logger.info("registerJson: " + registration.toString());
+		return Response.ok().entity(registration).build();
+	}
+	
+	@POST
+	@Consumes({ MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_XML })
+	public Response registerXML(Registration registration)
+	{
+		logger.info("registerXML: " + registration.toString());
 		return Response.ok().entity(registration).build();
 	}
 }
