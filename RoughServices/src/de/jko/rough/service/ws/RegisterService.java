@@ -9,7 +9,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import de.jko.rough.dao.RegisterDAO;
 import de.jko.rough.service.data.Registration;
+import de.jko.rough.service.data.ResponseObject;
 
 @Path("register")
 public class RegisterService extends AbstractService
@@ -30,9 +32,15 @@ public class RegisterService extends AbstractService
 	public Response register(@FormParam("username") String username, @FormParam("email") String email,
 			@FormParam("password") String password, @FormParam("password2") String password2)
 	{
+		ResponseObject response = null;
 		Registration registration = new Registration(username, email, password, password2);
 		logger.info("register: " + registration.toString());
-		return Response.ok().entity(registration).build();
+		
+		
+		RegisterDAO dao = new RegisterDAO();
+		response = dao.registerUser(registration);
+		
+		return Response.ok().entity(response).build();
 	}
 	
 	@POST
@@ -51,5 +59,13 @@ public class RegisterService extends AbstractService
 	{
 		logger.info("registerXML: " + registration.toString());
 		return Response.ok().entity(registration).build();
+	}
+	
+	private void registerUser(Registration registration)
+	{
+		// 01 Username bereits vorhanden?
+		// 02 Email bereits vorhanden?
+		// 03 Passwörter identisch?
+		// 04Passwörter stark genug?
 	}
 }

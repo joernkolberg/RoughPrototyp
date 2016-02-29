@@ -47,7 +47,6 @@
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>2.22.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
@@ -62,6 +61,11 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.1-901-1.jdbc4</version>
 		</dependency>
 	</dependencies>
 </project>
