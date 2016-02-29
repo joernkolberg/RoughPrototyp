@@ -27,10 +27,10 @@ public class RegisterService extends AbstractService
 	@POST
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response register(@FormParam("firstname") String firstname, @FormParam("lastname") String lastname,
-			@FormParam("email") String email, @FormParam("password") String password)
+	public Response register(@FormParam("username") String username, @FormParam("email") String email,
+			@FormParam("password") String password, @FormParam("password2") String password2)
 	{
-		Registration registration = new Registration(firstname, lastname, email, password);
+		Registration registration = new Registration(username, email, password, password2);
 		logger.info("register: " + registration.toString());
 		return Response.ok().entity(registration).build();
 	}

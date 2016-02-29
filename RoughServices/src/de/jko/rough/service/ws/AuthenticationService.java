@@ -14,9 +14,9 @@ public class AuthenticationService extends AbstractService
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response authenticate(@FormParam("email") String email, @FormParam("password") String password)
+	public Response authenticate(@FormParam("username") String username, @FormParam("password") String password)
 	{
-		logger.info("User " + email +" authenticated");
+		logger.info("User " + username +" authenticated");
 		// TODO: Prüfung
 		return Response.ok().build();
 	}
