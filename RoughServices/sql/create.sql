@@ -29,3 +29,21 @@ WITH (
 );
 ALTER TABLE registration
   OWNER TO postgres;
+  
+  
+-- Table: categories
+
+-- DROP TABLE categories;
+
+CREATE TABLE categories
+(
+  id serial NOT NULL,
+  category character(20) NOT NULL,
+  CONSTRAINT categories_pkey PRIMARY KEY (id )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE categories
+  OWNER TO postgres;
+
