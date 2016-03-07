@@ -8,6 +8,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import de.jko.rough.dao.AuthenticationDAO;
+
 @Path("authenticate")
 public class AuthenticationService extends AbstractService
 {
@@ -16,8 +18,10 @@ public class AuthenticationService extends AbstractService
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response authenticate(@FormParam("username") String username, @FormParam("password") String password)
 	{
-		logger.info("User " + username +" authenticated");
-		// TODO: Prüfung
-		return Response.ok().build();
+		logger.info("Authenticating user " + username);
+		AuthenticationDAO dao = new AuthenticationDAO();
+		boolean rc = dao.authenticateUser(username, password);
+		logger.info("User " + username + " authenticated: " + rc);
+		return Response.ok().entity(Boolean.valueOf(rc)).build();
 	}
 }
