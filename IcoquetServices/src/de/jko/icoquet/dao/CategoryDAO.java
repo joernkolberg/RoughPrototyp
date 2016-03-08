@@ -36,9 +36,8 @@ public class CategoryDAO extends AbstractDAO
 		finally
 		{
 			cleanUp(result, statement, connection);
-			System.out.println("User ");
 		}
-		
+		logger.info(categories.size()  + " categories selected.");
 		return categories;
 	}
 }

@@ -19,10 +19,14 @@ public class CategoryService extends AbstractService
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response listCatagories()
 	{
-		System.out.println("listCatagories");
+		logger.info("listCatagories - START");
+		
 		CategoryDAO dao = new CategoryDAO();
 		List<String> categories = dao.selectCategories();
-		System.out.println("listCatagories: " + categories.size());
+		
+		logger.info("listCatagories: " + categories.size());
+		logger.info("listCatagories - END");
+		
 		return Response.ok().entity(categories).build();
 	}
 }	

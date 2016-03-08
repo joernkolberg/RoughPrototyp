@@ -1,7 +1,7 @@
 package de.jko.icoquet.filter;
 
 import java.io.IOException;
-import java.net.URL;
+import java.util.UUID;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,9 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.xml.DOMConfigurator;
-
-import com.sun.istack.internal.logging.Logger;
+import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 
 /**
  * Servlet Filter implementation class CorsFilter
@@ -22,7 +21,7 @@ import com.sun.istack.internal.logging.Logger;
 @WebFilter("/*")
 public class CorsFilter implements Filter
 {
-	private Logger logger = Logger.getLogger(CorsFilter.class);
+	private Logger logger = Logger.getLogger(this.getClass());
 	
 	/**
 	 * Default constructor.
@@ -46,8 +45,10 @@ public class CorsFilter implements Filter
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
 	{
 		logger.info("doFilter START");
+		MDC.put("request-id", UUID.randomUUID().toString());
 		((HttpServletResponse) response).addHeader("Access-Control-Allow-Origin", "*");
 		chain.doFilter(request, response);
+		MDC.remove("request-id");
 		logger.info("doFilter END");
 	}
 

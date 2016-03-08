@@ -19,9 +19,12 @@ public class AuthenticationService extends AbstractService
 	public Response authenticate(@FormParam("username") String username, @FormParam("password") String password)
 	{
 		logger.info("Authenticating user " + username);
+		
 		AuthenticationDAO dao = new AuthenticationDAO();
 		boolean rc = dao.authenticateUser(username, password);
-		logger.info("User " + username + " authenticated: " + rc);
+		
+		logger.info("User '" + username + "' authenticated: " + rc);
+		
 		return Response.ok().entity(Boolean.valueOf(rc)).build();
 	}
 }

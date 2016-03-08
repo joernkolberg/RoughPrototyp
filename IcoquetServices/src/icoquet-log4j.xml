@@ -4,14 +4,14 @@
 	xmlns:log4j='http://jakarta.apache.org/log4j/'>
 	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
 	    <layout class="org.apache.log4j.PatternLayout">
-		<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+		<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m [Request-ID: %X{request-id}] %n" />
 	    </layout>
 	</appender>
 	<appender name="LOGFILE" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="File" value="C:/logs/Rough.log"/>
 		<param name="DatePattern" value=".yyyy-MMM-dd"/>
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m [Request-ID: %X{request-id}] %n" />
 		</layout>
 	</appender>
 	<logger name="de.jko">
@@ -20,12 +20,12 @@
 		<appender-ref ref="LOGFILE" />
 	</logger>
 	<logger name="org.glassfish">
-		<level value="FINE" />
+		<level value="ERROR" />
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="LOGFILE" />
 	</logger>
 	<root>
-		<level value="off"></level>
+		<level value="ERROR"></level>
 	</root>
 
 </log4j:configuration>

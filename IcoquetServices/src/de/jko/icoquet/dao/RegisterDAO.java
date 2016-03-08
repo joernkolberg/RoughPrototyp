@@ -11,6 +11,7 @@ import de.jko.icoquet.service.data.ResponseObject;
 public class RegisterDAO extends AbstractDAO
 {
 	private static final ResponseObject OK_RESPONSE = new ResponseObject(0, "Registrierung war erfolgreich");
+	
 	public ResponseObject registerUser(Registration registration)
 	{
 		boolean rc = checkUser(registration);
@@ -31,7 +32,6 @@ public class RegisterDAO extends AbstractDAO
 			statement.setString(2, registration.getEmail());
 			statement.setString(3, registration.getPassword());
 			statement.execute();
-			System.out.println(statement.getUpdateCount());
 		}
 		catch (SQLException e)
 		{
@@ -43,6 +43,9 @@ public class RegisterDAO extends AbstractDAO
 		{
 			cleanUp(null, statement, connection);
 		}
+		
+		logger.info("User '" + registration.getUsername() + "' registered.");
+		
 		return OK_RESPONSE;
 	}
 	
@@ -71,8 +74,8 @@ public class RegisterDAO extends AbstractDAO
 		finally
 		{
 			cleanUp(result, statement, connection);
-			System.out.println("User ");
 		}
+		logger.info("User '" + registration.getUsername() + "' not yet registered: " + rc);
 		return rc;
 	}
 }

@@ -28,7 +28,7 @@ public class FileService extends AbstractService
 		String uploadedFileLocation = "d://uploaded/" + fileMetaData.getFileName();
 		writeToFile(fileInputStream, uploadedFileLocation);
 		String output = "File uploaded to : " + uploadedFileLocation;
-		System.out.println(output);
+		logger.info(output);
 
 		return Response.status(200).build();
 

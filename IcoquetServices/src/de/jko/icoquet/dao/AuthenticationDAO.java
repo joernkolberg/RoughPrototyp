@@ -33,7 +33,6 @@ public class AuthenticationDAO extends AbstractDAO
 		finally
 		{
 			cleanUp(result, statement, connection);
-			System.out.println("User ");
 		}
 		return rc;
 	}
