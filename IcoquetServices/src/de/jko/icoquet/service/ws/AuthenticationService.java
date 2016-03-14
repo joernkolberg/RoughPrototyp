@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import de.jko.icoquet.dao.AuthenticationDAO;
+import de.jko.icoquet.service.data.User;
 
 @Path("authenticate")
 public class AuthenticationService extends AbstractService
@@ -21,10 +22,10 @@ public class AuthenticationService extends AbstractService
 		logger.info("Authenticating user " + username);
 		
 		AuthenticationDAO dao = new AuthenticationDAO();
-		boolean rc = dao.authenticateUser(username, password);
+		User user = dao.authenticateUser(username, password);
 		
-		logger.info("User '" + username + "' authenticated: " + rc);
+		logger.info("User '" + username + "' authenticated: " + user.toString());
 		
-		return Response.ok().entity(Boolean.valueOf(rc)).build();
+		return Response.ok().entity(user).build();
 	}
 }

@@ -46,9 +46,14 @@ public class CorsFilter implements Filter
 	{
 		logger.info("doFilter START");
 		MDC.put("request-id", UUID.randomUUID().toString());
+
 		((HttpServletResponse) response).addHeader("Access-Control-Allow-Origin", "*");
+		((HttpServletResponse) response).addHeader("Access-Control-Allow-Headers", "Content-Type");
+		
 		chain.doFilter(request, response);
+
 		MDC.remove("request-id");
+		
 		logger.info("doFilter END");
 	}
 

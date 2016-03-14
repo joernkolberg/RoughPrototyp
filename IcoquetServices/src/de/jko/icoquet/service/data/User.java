@@ -5,27 +5,56 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Registration implements Serializable
+public class User implements Serializable
 {
 	private static final long serialVersionUID = 8580391120562900331L;
 
+	private int id = -1;
 	private String username = null;
 	private String email = null;
 	private String password = null;
 	private String password2 = null;
 	
-	public Registration()
+	public User()
 	{
 		super();
 	}
+	
+	public User(int id, String username, String email)
+	{
+		super();
+		this.id = id;
+		this.username = username;
+		this.email = email;
+	}
 
-	public Registration(String username, String email, String password, String password2)
+	public User(String username, String email, String password, String password2)
 	{
 		super();
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.password2 = password2;
+	}
+
+	public User(int id, String username, String email, String password, String password2)
+	{
+		super();
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.password2 = password2;
+	}
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 
 	public String getUsername()

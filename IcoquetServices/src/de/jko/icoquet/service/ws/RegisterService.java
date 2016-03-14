@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import de.jko.icoquet.dao.RegisterDAO;
-import de.jko.icoquet.service.data.Registration;
+import de.jko.icoquet.service.data.User;
 import de.jko.icoquet.service.data.ResponseObject;
 
 @Path("register")
@@ -33,7 +33,7 @@ public class RegisterService extends AbstractService
 			@FormParam("password") String password, @FormParam("password2") String password2)
 	{
 		ResponseObject response = null;
-		Registration registration = new Registration(username, email, password, password2);
+		User registration = new User(username, email, password, password2);
 		logger.info("register: " + registration.toString());
 		
 		
@@ -46,7 +46,7 @@ public class RegisterService extends AbstractService
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response registerJson(Registration registration)
+	public Response registerJson(User registration)
 	{
 		logger.info("registerJson: " + registration.toString());
 		return Response.ok().entity(registration).build();
@@ -55,13 +55,13 @@ public class RegisterService extends AbstractService
 	@POST
 	@Consumes({ MediaType.APPLICATION_XML})
 	@Produces({ MediaType.APPLICATION_XML })
-	public Response registerXML(Registration registration)
+	public Response registerXML(User registration)
 	{
 		logger.info("registerXML: " + registration.toString());
 		return Response.ok().entity(registration).build();
 	}
 	
-	private void registerUser(Registration registration)
+	private void registerUser(User registration)
 	{
 		// 01 Username bereits vorhanden?
 		// 02 Email bereits vorhanden?

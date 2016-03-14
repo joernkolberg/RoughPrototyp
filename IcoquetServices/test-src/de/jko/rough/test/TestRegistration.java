@@ -14,7 +14,7 @@ import javax.ws.rs.core.UriBuilder;
 import org.glassfish.jersey.client.ClientConfig;
 import org.junit.Test;
 
-import de.jko.icoquet.service.data.Registration;
+import de.jko.icoquet.service.data.User;
 
 public class TestRegistration extends AbstractTest
 {
@@ -54,9 +54,9 @@ public class TestRegistration extends AbstractTest
 		Client client = ClientBuilder.newClient(config);
 		WebTarget service = client.target(getBaseURI());
 		
-		Registration registration = new Registration("Jupp", "Zupp", "jupp.zupp@yahoo.de", "secret");
+		User registration = new User("Jupp", "Zupp", "jupp.zupp@yahoo.de", "secret");
 		
-		Entity<Registration> entity = Entity.entity(registration, MediaType.APPLICATION_JSON_TYPE);
+		Entity<User> entity = Entity.entity(registration, MediaType.APPLICATION_JSON_TYPE);
 		Response response = service.path("register").request(MediaType.APPLICATION_JSON_TYPE).post(entity, Response.class);
 
 		logger.info("testJson - response: " + response.getStatus());
@@ -72,9 +72,9 @@ public class TestRegistration extends AbstractTest
 		Client client = ClientBuilder.newClient(config);
 		WebTarget service = client.target(getBaseURI());
 		
-		Registration registration = new Registration("Jupp", "Zupp", "jupp.zupp@yahoo.de", "secret");
+		User registration = new User("Jupp", "Zupp", "jupp.zupp@yahoo.de", "secret");
 		
-		Entity<Registration> entity = Entity.entity(registration, MediaType.APPLICATION_XML_TYPE);
+		Entity<User> entity = Entity.entity(registration, MediaType.APPLICATION_XML_TYPE);
 		Response response = service.path("register").request(MediaType.APPLICATION_XML_TYPE).post(entity, Response.class);
 
 		logger.info("testXML - response: " + response.getStatus());
