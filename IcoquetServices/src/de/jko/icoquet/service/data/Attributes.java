@@ -170,7 +170,13 @@ public class Attributes
 	{
 		this.swimming = swimming;
 	}
-	
-	
 
+	@Override
+	public String toString()
+	{
+		return "Attributes [acting=" + acting + ", beard=" + beard + ", design=" + design + ", dinner=" + dinner + ", drink=" + drink + ", fastfood="
+				+ fastfood + ", food=" + food + ", freetime=" + freetime + ", gender=" + gender + ", goingout=" + goingout + ", hair=" + hair
+				+ ", music=" + music + ", pet=" + pet + ", place=" + place + ", plant=" + plant + ", season=" + season + ", sports=" + sports
+				+ ", swimming=" + swimming + "]";
+	}
 }

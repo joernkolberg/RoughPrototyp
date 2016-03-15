@@ -14,6 +14,7 @@ public class User implements Serializable
 	private String email = null;
 	private String password = null;
 	private String password2 = null;
+	private Attributes attributes = new Attributes();
 	
 	public User()
 	{
@@ -97,11 +98,19 @@ public class User implements Serializable
 		this.password2 = password2;
 	}
 
+	public Attributes getAttributes()
+	{
+		return attributes;
+	}
+
+	public void setAttributes(Attributes attributes)
+	{
+		this.attributes = attributes;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "Registration [username=" + username + ", email=" + email + ", password=" + password + ", password2=" + password2 + "]";
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", attributes=" + attributes.toString() + "]";
 	}
-
-	
 }

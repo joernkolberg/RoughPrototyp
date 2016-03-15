@@ -2,7 +2,6 @@ package de.jko.icoquet.service.ws;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -19,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.jko.icoquet.dao.AttributeDAO;
 import de.jko.icoquet.service.data.Attribute;
+import de.jko.icoquet.service.data.User;
 
 @Path("attributes")
 public class AttributeService extends AbstractService
@@ -88,7 +88,7 @@ public class AttributeService extends AbstractService
 			List<Attribute> list = mapper.readValue(p.toString(), mapper.getTypeFactory().constructCollectionType(ArrayList.class, Attribute.class));
 			for (Attribute attribute : list)
 			{
-				if(attribute.isWeighted())
+				if(attribute.isWeighted() || attribute.getName().equals("gender"))
 					andAttributeList.add(attribute);
 				else
 					orAttributeList.add(attribute);
@@ -98,7 +98,9 @@ public class AttributeService extends AbstractService
 			logger.info("orAttributeList size: " + orAttributeList.size());
 			
 			AttributeDAO dao = new AttributeDAO();
-			dao.findMatches(andAttributeList, orAttributeList);
+			List<User> matches = dao.findMatches(andAttributeList, orAttributeList);
+			logger.info("matches: " + matches.size());
+			return Response.ok().entity(matches).build();
 		}
 		catch (JsonParseException e)
 		{
@@ -116,6 +118,6 @@ public class AttributeService extends AbstractService
 			e.printStackTrace();
 		}
 	
-		return Response.ok().entity(true).build();
+		return Response.ok().entity("error").build();
 	}
 }
