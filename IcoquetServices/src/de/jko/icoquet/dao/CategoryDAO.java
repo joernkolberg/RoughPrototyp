@@ -27,6 +27,7 @@ public class CategoryDAO extends AbstractDAO
 			while(result.next())
 				categories.add(result.getString(1));
 			
+			// TODO: Ändern
 			categories.remove("gender");
 		}
 		catch (SQLException e)

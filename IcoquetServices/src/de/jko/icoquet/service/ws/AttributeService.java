@@ -35,20 +35,24 @@ public class AttributeService extends AbstractService
 		
 		try
 		{
-			ObjectMapper objectMapper = new ObjectMapper();
-			JsonNode node = objectMapper.readTree(attributes);
-			JsonNode p = node.get("params");
-			int size = p.size();
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode node = mapper.readTree(attributes);
+			// JsonNode p = node;
+			JsonNode p = node.get("attributes");
+			String userid = "";
 			
-			for(int i=0; i<size; i++)
+			List<Attribute> list = mapper.readValue(p.toString(), mapper.getTypeFactory().constructCollectionType(ArrayList.class, Attribute.class));
+			for (Attribute attribute : list)
 			{
-				JsonNode f = p.get(i);
-				String s = f.asText();
-				String[] pair = s.split(":");
-				attributeList.add(new Attribute(pair[0], pair[1]));
+				if(attribute.getName().equals("userid"))
+					userid = attribute.getValue();
+				else
+					attributeList.add(attribute);
 			}
-			logger.info("attributes size: " + attributeList.size());
+			logger.info("attributeList size: " + attributeList.size());
 			
+			AttributeDAO dao = new AttributeDAO();
+			dao.saveProfile(userid, attributeList);
 		}
 		catch (JsonParseException e)
 		{
@@ -83,6 +87,7 @@ public class AttributeService extends AbstractService
 		{
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode node = mapper.readTree(attributes);
+			// JsonNode p = node;
 			JsonNode p = node.get("attributes");
 			
 			List<Attribute> list = mapper.readValue(p.toString(), mapper.getTypeFactory().constructCollectionType(ArrayList.class, Attribute.class));
@@ -100,6 +105,9 @@ public class AttributeService extends AbstractService
 			AttributeDAO dao = new AttributeDAO();
 			List<User> matches = dao.findMatches(andAttributeList, orAttributeList);
 			logger.info("matches: " + matches.size());
+			
+			// TODO: Gegensatz finden
+			
 			return Response.ok().entity(matches).build();
 		}
 		catch (JsonParseException e)

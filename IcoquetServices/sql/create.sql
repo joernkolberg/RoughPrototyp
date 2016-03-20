@@ -38,7 +38,7 @@ ALTER TABLE registration
 CREATE TABLE categories
 (
   id serial NOT NULL,
-  category character(20) NOT NULL,
+  category varchar(20) NOT NULL,
   CONSTRAINT categories_pkey PRIMARY KEY (id )
 )
 WITH (
