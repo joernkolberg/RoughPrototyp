@@ -35,24 +35,20 @@ public class AttributeService extends AbstractService
 		
 		try
 		{
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode node = mapper.readTree(attributes);
-			// JsonNode p = node;
-			JsonNode p = node.get("attributes");
-			String userid = "";
+			ObjectMapper objectMapper = new ObjectMapper();
+			JsonNode node = objectMapper.readTree(attributes);
+			JsonNode p = node.get("params");
+			int size = p.size();
 			
-			List<Attribute> list = mapper.readValue(p.toString(), mapper.getTypeFactory().constructCollectionType(ArrayList.class, Attribute.class));
-			for (Attribute attribute : list)
+			for(int i=0; i<size; i++)
 			{
-				if(attribute.getName().equals("userid"))
-					userid = attribute.getValue();
-				else
-					attributeList.add(attribute);
+				JsonNode f = p.get(i);
+				String s = f.asText();
+				String[] pair = s.split(":");
+				attributeList.add(new Attribute(pair[0], pair[1]));
 			}
-			logger.info("attributeList size: " + attributeList.size());
+			logger.info("attributes size: " + attributeList.size());
 			
-			AttributeDAO dao = new AttributeDAO();
-			dao.saveProfile(userid, attributeList);
 		}
 		catch (JsonParseException e)
 		{
@@ -87,7 +83,6 @@ public class AttributeService extends AbstractService
 		{
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode node = mapper.readTree(attributes);
-			// JsonNode p = node;
 			JsonNode p = node.get("attributes");
 			
 			List<Attribute> list = mapper.readValue(p.toString(), mapper.getTypeFactory().constructCollectionType(ArrayList.class, Attribute.class));
@@ -105,10 +100,45 @@ public class AttributeService extends AbstractService
 			AttributeDAO dao = new AttributeDAO();
 			List<User> matches = dao.findMatches(andAttributeList, orAttributeList);
 			logger.info("matches: " + matches.size());
-			
-			// TODO: Gegensatz finden
-			
 			return Response.ok().entity(matches).build();
+		}
+		catch (JsonParseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (JsonMappingException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return Response.ok().entity("error").build();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("user")
+	public Response readUser(String id)
+	{
+		logger.info("id " + id);
+		User user = null;
+		
+		try
+		{
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode node = mapper.readTree(id);
+			JsonNode p = node.get("id");
+
+			AttributeDAO dao = new AttributeDAO();
+			user = dao.selectMatch(Integer.parseInt(p.asText()));
+			return Response.ok().entity(user).build();
 		}
 		catch (JsonParseException e)
 		{

@@ -130,29 +130,29 @@ public class AttributeDAO extends AbstractDAO
 		return matches;
 	}
 	
-	public void saveProfile(String userid, List<Attribute> attributeList)
+	public User selectMatch(int id)
 	{
-		String sql =  "select count(*) from attributes where userid = ?";
+		User user = null;
+		
+		StringBuffer sql = new StringBuffer("select r.id, r.username, r.email from registration r where r.id = ?");
+		
 		Connection connection = null;
 		PreparedStatement statement = null;
 				
 		try
 		{
-			logger.info("sql = " + sql.toString());
 			
 			connection = getConnection();
 			statement = connection.prepareStatement(sql.toString());
-			statement.setInt(1, Integer.parseInt(userid));
-
-			ResultSet rs = statement.executeQuery();
-			rs.next();
-			int count = rs.getInt(1);
-			if(count > 0)
-				updateProfile(userid, attributeList);
-			else
-				insertProfile(userid, attributeList);
+			statement.setInt(1, id);
+			
+			ResultSet result = statement.executeQuery();
+			if(result.next())
+			{
+				user = new User(result.getInt("ID"), result.getString("USERNAME"), result.getString("EMAIL"));
+			}
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
 			logger.error("Error", e);
 		}
@@ -160,101 +160,8 @@ public class AttributeDAO extends AbstractDAO
 		{
 			cleanUp(null, statement, connection);
 		}
+		
+		return user;
 	}
 	
-	public void insertProfile(String userid, List<Attribute> attributeList)
-	{
-		StringBuffer sql =  new StringBuffer("insert into attributes (userid");
-		Connection connection = null;
-		PreparedStatement statement = null;
-				
-		try
-		{
-			for (Attribute attribute : attributeList) 
-			{
-				sql.append(", ");
-				sql.append(attribute.getName());
-			}
-			sql.append(") values (");
-			
-			for (int i= 0; i < attributeList.size(); i++) 
-			{
-				if(i > 0)
-					sql.append(", ");
-				
-				sql.append("?");
-			}
-			sql.append(", ?)");
-			
-			logger.info("sql = " + sql.toString());
-			
-			connection = getConnection();
-			statement = connection.prepareStatement(sql.toString());
-			
-			
-			statement.setInt(1, Integer.parseInt(userid));
-			int counter = 2;
-			for (Attribute attribute : attributeList) 
-			{
-				statement.setString(counter, attribute.getValue());
-				counter++;
-			}
-			
-			statement.execute();
-		}
-		catch (Exception e)
-		{
-			logger.error("Error", e);
-		}
-		finally
-		{
-			cleanUp(null, statement, connection);
-		}
-	}
-	
-	public void updateProfile(String userid, List<Attribute> attributeList)
-	{
-		StringBuffer sql =  new StringBuffer("update attributes set ");
-		Connection connection = null;
-		PreparedStatement statement = null;
-				
-		try
-		{
-			int counter = 0;
-			for (Attribute attribute : attributeList) 
-			{
-				if(counter > 0)
-					sql.append(", ");
-				
-				sql.append(attribute.getName());
-				sql.append("= ?");
-				counter++;
-			}
-
-			sql.append(" where userid = ?");
-			
-			logger.info("sql = " + sql.toString());
-			
-			connection = getConnection();
-			statement = connection.prepareStatement(sql.toString());
-
-			counter = 1;
-			for (Attribute attribute : attributeList) 
-			{
-				statement.setString(counter, attribute.getValue());
-				counter++;
-			}
-			statement.setInt(counter, Integer.parseInt(userid));
-			
-			statement.execute();
-		}
-		catch (Exception e)
-		{
-			logger.error("Error", e);
-		}
-		finally
-		{
-			cleanUp(null, statement, connection);
-		}
-	}
 }

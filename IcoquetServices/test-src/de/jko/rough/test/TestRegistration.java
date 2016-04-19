@@ -80,10 +80,4 @@ public class TestRegistration extends AbstractTest
 		logger.info("testXML - response: " + response.getStatus());
 		logger.info("testXML - END");
 	}
-
-	private static URI getBaseURI()
-	{
-		return UriBuilder.fromUri("http://localhost:8080/RoughServices/rest").build();
-	}
-
 }

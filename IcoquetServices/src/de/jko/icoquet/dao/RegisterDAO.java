@@ -120,4 +120,62 @@ public class RegisterDAO extends AbstractDAO
 		}
 		return rc;
 	}
+	
+	public boolean updateProfilePicture(int userid, byte[] profilepicture)
+	{
+		boolean rc = true;
+		String sql = "update registration set profilepic = ? where id = ?";
+		Connection connection = null;
+		PreparedStatement statement = null;
+		
+		try
+		{
+			connection = getConnection();
+			statement = connection.prepareStatement(sql);
+			statement.setBytes(1, profilepicture);
+			statement.setInt(2, userid);
+			int rowCount = statement.executeUpdate();
+			System.out.println(rowCount);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			cleanUp(null, statement, connection);
+		}
+		return rc;
+	}
+	
+	public byte[] getProfilePicture(int userid)
+	{
+		byte[] profilepicture = null;
+		String sql = "select profilepic from registration where id = ?";
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		
+		try
+		{
+			connection = getConnection();
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userid);
+			result = statement.executeQuery();
+			if(result.next())
+			{
+				profilepicture = result.getBytes("profilepic");
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			cleanUp(null, statement, connection);
+		}
+		
+		return profilepicture;
+	}
 }

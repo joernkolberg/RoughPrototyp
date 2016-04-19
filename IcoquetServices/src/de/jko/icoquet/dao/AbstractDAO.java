@@ -19,7 +19,12 @@ public class AbstractDAO
 		try
 		{
 			Class.forName("org.postgresql.Driver");
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:6969/mobiledb", "postgres", "postgres");
+			String USERNAME = System.getenv("OPENSHIFT_POSTGRESQL_DB_USERNAME");
+			String PASSWORD = System.getenv("OPENSHIFT_POSTGRESQL_DB_PASSWORD");
+			String DB_NAME = System.getenv("OPENSHIFT_APP_NAME");
+			String URL = "jdbc:" + System.getenv("OPENSHIFT_POSTGRESQL_DB_URL") + "/" + DB_NAME;
+			connection = DriverManager.getConnection("jdbc:postgresql://127.7.45.2:5432/icoquetservices", USERNAME , PASSWORD);
+			// connection = DriverManager.getConnection("jdbc:postgresql://localhost:6969/mobiledb", "postgres", "postgres");
 		}
 		catch (ClassNotFoundException e)
 		{

@@ -22,6 +22,7 @@ CREATE TABLE registration
   username varchar(20) NOT NULL,
   email varchar(50) NOT NULL,
   password varchar(20) NOT NULL,
+  profilepic bytea,
   CONSTRAINT registration_pkey PRIMARY KEY (id )
 )
 WITH (
@@ -38,7 +39,7 @@ ALTER TABLE registration
 CREATE TABLE categories
 (
   id serial NOT NULL,
-  category varchar(20) NOT NULL,
+  category character(20) NOT NULL,
   CONSTRAINT categories_pkey PRIMARY KEY (id )
 )
 WITH (
